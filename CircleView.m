@@ -8,25 +8,8 @@
 
 #import "CircleView.h"
 #import <QuartzCore/QuartzCore.h>
-#include <stdlib.h>
 
 @implementation CircleView
-
-//Colours only need to be static to share them with all instances
-+(NSArray*) colours
-{
-    static NSArray* colours = nil;
-    
-    static dispatch_once_t oncePredicate;
-    
-    dispatch_once(&oncePredicate, ^{
-        // Here's the list of colours we are going to use
-        colours = [NSArray arrayWithObjects:@"black",@"darkGray",@"lightGray",@"gray",@"red",@"green",@"blue",@"cyan",@"yellow",@"magenta",@"orange",@"purple",@"brown", nil];
-    });
-    
-    return colours;
-}
-
 
 -(id) initWithFrame:(CGRect)frame {
     if( self = [super initWithFrame:frame]) {
@@ -35,9 +18,14 @@
         //get the label nice and centred
         colourNameLabel = [[UILabel alloc] initWithFrame:self.bounds];
         colourNameLabel.textAlignment = NSTextAlignmentCenter;
-        colourNameLabel.textColor = [UIColor whiteColor]; //we never use white for circles
+        //we never use white for circles
+        colourNameLabel.textColor = [UIColor whiteColor];
+        //helps readability in some cases by using shadows
         colourNameLabel.shadowColor = [UIColor blackColor];
-        colourNameLabel.shadowOffset = CGSizeMake(1, 1); //helps readability in some cases
+        colourNameLabel.shadowOffset = CGSizeMake(1, 1);
+        //some names are long - make them squish
+        colourNameLabel.minimumScaleFactor = 0.3f;
+        colourNameLabel.adjustsFontSizeToFitWidth = YES;
         [self addSubview:colourNameLabel];
         
         singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(randomiseColour)];
@@ -51,6 +39,12 @@
         doubleTap.delaysTouchesBegan = YES;
         [singleTap requireGestureRecognizerToFail:doubleTap];
         [self addGestureRecognizer:doubleTap];
+        
+        //since we use network, let's indicate nicely what's going on to the user
+        loadingSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        loadingSpinner.hidesWhenStopped = YES;
+        [self addSubview:loadingSpinner];
+        loadingSpinner.frame = self.bounds;
 
     }
     
@@ -64,6 +58,17 @@
     doubleTap.enabled = !busyAnimating;
 }
 
+-(void) setBusyDownloading:(BOOL)busyDownloading {
+    _busyDownloading = busyDownloading;
+    if(_busyDownloading) {
+        [loadingSpinner startAnimating];
+        colourNameLabel.alpha = 0.5f;
+    } else {
+        [loadingSpinner stopAnimating];
+        colourNameLabel.alpha = 1.0f;
+    }
+}
+
 -(CGColorRef) backgroundColour {
     return self.layer.backgroundColor;
 }
@@ -72,17 +77,11 @@
     self.layer.backgroundColor = backgroundColour;
 }
 
--(void) setColourWithName:(NSString*) colourName {
-    NSString *selectorString = [colourName stringByAppendingString:@"Color"];
-    SEL selector = NSSelectorFromString(selectorString);
-    UIColor *color = [UIColor blackColor];
-    if ([UIColor respondsToSelector:selector]) {
-        color = [UIColor performSelector:selector];
-    }
+-(void) setColour:(UIColor*) colour withName:(NSString*) colourName {
     _busyAnimating = YES;
     [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction
                      animations:^{
-                         self.backgroundColor = color;
+                         self.backgroundColor = colour;
                      }
                      completion:^(BOOL finished) {
                          _busyAnimating = NO;
@@ -120,9 +119,40 @@
                      }];
 }
 
+-(void) doDownloadOfColour {
+    NSURL *url=[NSURL URLWithString:@"http://www.colourlovers.com/api/colors/random?format=json"];
+    NSData *data=[NSData dataWithContentsOfURL:url];
+    NSError *error=nil;
+    NSArray *response=[NSJSONSerialization JSONObjectWithData:data options:
+                       NSJSONReadingMutableContainers error:&error];
+
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(response.count>0) {
+            //seems to have gone ok
+            NSDictionary *colourDictionary = [response objectAtIndex:0];
+            NSString *colourName = [colourDictionary objectForKey:@"title"];
+            NSDictionary *rgbDictionary = [colourDictionary objectForKey:@"rgb"];
+            NSNumber *blue = [rgbDictionary objectForKey:@"blue"];
+            NSNumber *green = [rgbDictionary objectForKey:@"green"];
+            NSNumber *red = [rgbDictionary objectForKey:@"red"];
+            UIColor *colour = [UIColor colorWithRed:red.floatValue/255.0f green:green.floatValue/255.0f blue:blue.floatValue/255.0f alpha:1.0f];
+            [self setColour:colour withName:colourName];
+        }
+        self.busyDownloading = NO;
+    });
+
+
+}
+
 -(void) randomiseColour {
-    NSInteger colourIndex  = arc4random_uniform((u_int32_t)[CircleView colours].count);
-    [self setColourWithName:[[CircleView colours] objectAtIndex:colourIndex]];
+    //Network operation so keep it safe and don't stack them
+    if (!_busyDownloading) {
+        self.busyDownloading = YES;
+        [self performSelectorInBackground:@selector(doDownloadOfColour) withObject:nil];
+        
+    }
+
 }
 
 

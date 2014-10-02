@@ -18,9 +18,12 @@
     
     //Data elements
     NSArray *colourNames;
+    
+    //Loading indicator
+    UIActivityIndicatorView *loadingSpinner;
 }
 //sets both the bg colour and the label name
--(void) setColourWithName:(NSString*) colourName;
+-(void) setColour:(UIColor*) colour withName:(NSString*) colourName;
 //Convenience methods to fade in/out
 -(void) fadeIn;
 -(void) fadeOut;
@@ -28,6 +31,7 @@
 -(void) randomiseColour;
 
 @property (nonatomic,readonly) BOOL busyAnimating;
+@property (nonatomic,readonly) BOOL busyDownloading;
 @property (nonatomic,assign) BOOL dragged;
 
 @end
