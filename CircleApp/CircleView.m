@@ -45,6 +45,9 @@
         loadingSpinner.hidesWhenStopped = YES;
         [self addSubview:loadingSpinner];
         loadingSpinner.frame = self.bounds;
+        
+        //set a temp colour for background while hasn't loaded
+        self.layer.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.3f].CGColor;
 
     }
     

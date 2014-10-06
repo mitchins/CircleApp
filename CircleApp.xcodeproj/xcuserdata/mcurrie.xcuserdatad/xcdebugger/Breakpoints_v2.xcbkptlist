@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CircleApp/CircleView.m"
-            timestampString = "433947500.99126"
+            timestampString = "434328982.332486"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
             landmarkName = "-setBusyDownloading:"
             landmarkType = "5">
          </BreakpointContent>

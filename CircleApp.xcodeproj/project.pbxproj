@@ -13,20 +13,9 @@
 		94EEC08819DD6C1800E9A459 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94EEC08619DD6C1800E9A459 /* Main.storyboard */; };
 		94EEC08A19DD6C1800E9A459 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94EEC08919DD6C1800E9A459 /* Images.xcassets */; };
 		94EEC08D19DD6C1800E9A459 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94EEC08B19DD6C1800E9A459 /* LaunchScreen.xib */; };
-		94EEC09919DD6C1800E9A459 /* CircleAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EEC09819DD6C1800E9A459 /* CircleAppTests.m */; };
 		94EEC0A419DD6CF200E9A459 /* CircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EEC0A319DD6CF200E9A459 /* CircleView.m */; };
 		94EEC0A619DD6E0300E9A459 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EEC0A519DD6E0300E9A459 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		94EEC09319DD6C1800E9A459 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 94EEC07119DD6C1800E9A459 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 94EEC07819DD6C1800E9A459;
-			remoteInfo = CircleApp;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		94EEC07919DD6C1800E9A459 /* CircleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CircleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -39,9 +28,6 @@
 		94EEC08719DD6C1800E9A459 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		94EEC08919DD6C1800E9A459 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		94EEC08C19DD6C1800E9A459 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		94EEC09219DD6C1800E9A459 /* CircleAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CircleAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		94EEC09719DD6C1800E9A459 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		94EEC09819DD6C1800E9A459 /* CircleAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CircleAppTests.m; sourceTree = "<group>"; };
 		94EEC0A219DD6CF200E9A459 /* CircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleView.h; sourceTree = "<group>"; };
 		94EEC0A319DD6CF200E9A459 /* CircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleView.m; sourceTree = "<group>"; };
 		94EEC0A519DD6E0300E9A459 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -56,13 +42,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		94EEC08F19DD6C1800E9A459 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -71,7 +50,6 @@
 			children = (
 				94EEC0A519DD6E0300E9A459 /* QuartzCore.framework */,
 				94EEC07B19DD6C1800E9A459 /* CircleApp */,
-				94EEC09519DD6C1800E9A459 /* CircleAppTests */,
 				94EEC07A19DD6C1800E9A459 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -80,7 +58,6 @@
 			isa = PBXGroup;
 			children = (
 				94EEC07919DD6C1800E9A459 /* CircleApp.app */,
-				94EEC09219DD6C1800E9A459 /* CircleAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -111,23 +88,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		94EEC09519DD6C1800E9A459 /* CircleAppTests */ = {
-			isa = PBXGroup;
-			children = (
-				94EEC09819DD6C1800E9A459 /* CircleAppTests.m */,
-				94EEC09619DD6C1800E9A459 /* Supporting Files */,
-			);
-			path = CircleAppTests;
-			sourceTree = "<group>";
-		};
-		94EEC09619DD6C1800E9A459 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				94EEC09719DD6C1800E9A459 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -148,24 +108,6 @@
 			productReference = 94EEC07919DD6C1800E9A459 /* CircleApp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		94EEC09119DD6C1800E9A459 /* CircleAppTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 94EEC09F19DD6C1800E9A459 /* Build configuration list for PBXNativeTarget "CircleAppTests" */;
-			buildPhases = (
-				94EEC08E19DD6C1800E9A459 /* Sources */,
-				94EEC08F19DD6C1800E9A459 /* Frameworks */,
-				94EEC09019DD6C1800E9A459 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				94EEC09419DD6C1800E9A459 /* PBXTargetDependency */,
-			);
-			name = CircleAppTests;
-			productName = CircleAppTests;
-			productReference = 94EEC09219DD6C1800E9A459 /* CircleAppTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -177,10 +119,6 @@
 				TargetAttributes = {
 					94EEC07819DD6C1800E9A459 = {
 						CreatedOnToolsVersion = 6.0;
-					};
-					94EEC09119DD6C1800E9A459 = {
-						CreatedOnToolsVersion = 6.0;
-						TestTargetID = 94EEC07819DD6C1800E9A459;
 					};
 				};
 			};
@@ -198,7 +136,6 @@
 			projectRoot = "";
 			targets = (
 				94EEC07819DD6C1800E9A459 /* CircleApp */,
-				94EEC09119DD6C1800E9A459 /* CircleAppTests */,
 			);
 		};
 /* End PBXProject section */
@@ -211,13 +148,6 @@
 				94EEC08819DD6C1800E9A459 /* Main.storyboard in Resources */,
 				94EEC08D19DD6C1800E9A459 /* LaunchScreen.xib in Resources */,
 				94EEC08A19DD6C1800E9A459 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		94EEC09019DD6C1800E9A459 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,23 +165,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		94EEC08E19DD6C1800E9A459 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				94EEC09919DD6C1800E9A459 /* CircleAppTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		94EEC09419DD6C1800E9A459 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 94EEC07819DD6C1800E9A459 /* CircleApp */;
-			targetProxy = 94EEC09319DD6C1800E9A459 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		94EEC08619DD6C1800E9A459 /* Main.storyboard */ = {
@@ -369,40 +283,6 @@
 			};
 			name = Release;
 		};
-		94EEC0A019DD6C1800E9A459 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = CircleAppTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CircleApp.app/CircleApp";
-			};
-			name = Debug;
-		};
-		94EEC0A119DD6C1800E9A459 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = CircleAppTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CircleApp.app/CircleApp";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -422,14 +302,7 @@
 				94EEC09E19DD6C1800E9A459 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-		};
-		94EEC09F19DD6C1800E9A459 /* Build configuration list for PBXNativeTarget "CircleAppTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				94EEC0A019DD6C1800E9A459 /* Debug */,
-				94EEC0A119DD6C1800E9A459 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
