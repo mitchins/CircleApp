@@ -28,6 +28,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRecognized:)];
+    [self.view addGestureRecognizer:tapGestureRecognizer];
+    
     CircleView *newCircle = [self createCircleAt:CGPointMake(self.view.frame.size.width/2.0f, self.view.frame.size.height/2.0f)];
     [newCircle fadeIn];
     
@@ -38,35 +41,9 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    CGPoint locationPoint = [[touches anyObject] locationInView:self.view];
-    UIView* touchedView = [self.view hitTest:locationPoint withEvent:event];
-    
-    if ([touchedView isKindOfClass:[CircleView class]]) {
-        viewBeingDragged = (CircleView*)touchedView;
-        viewBeingDragged.dragged = YES;
-    } else {
-        //it's a circle view, see if dragging will start
-        //the view's backdrop was touched, so create a new circle view
-        CircleView *newCircle = [self createCircleAt:locationPoint];
-        [newCircle fadeIn];
-    }
-}
-
--(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    //Dragging may have continued, let's check
-    if (viewBeingDragged) {
-        CGPoint locationPoint = [[touches anyObject] locationInView:self.view];
-        viewBeingDragged.frame = CGRectMake(locationPoint.x - viewBeingDragged.frame.size.width/2.0f, locationPoint.y - viewBeingDragged.frame.size.height/2.0f, viewBeingDragged.frame.size.width, viewBeingDragged.frame.size.height);
-    }
-}
-
--(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    //dragging must have ended
-    if (viewBeingDragged) {
-        viewBeingDragged.dragged = NO;
-        viewBeingDragged = nil;
-    }
+-(void)tapRecognized:(UITapGestureRecognizer*)gesture{
+    CircleView *tapCircle = [self createCircleAt:[gesture locationInView:self.view]];
+    [tapCircle fadeIn];
 }
 
 @end
