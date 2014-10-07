@@ -48,7 +48,9 @@
         
         //set a temp colour for background while hasn't loaded
         self.layer.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.3f].CGColor;
-
+        
+        UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panRecognized:)];
+        [self addGestureRecognizer:panRecognizer];
     }
     
     return self;
@@ -92,12 +94,6 @@
     colourNameLabel.text =colourName;
 }
 
--(void) setDragged:(BOOL)dragged {
-    _dragged = dragged;
-    CGFloat desiredScale = _dragged?1.1f:1.0f;
-    self.layer.transform = CATransform3DMakeScale(desiredScale, desiredScale, 1);
-}
-
 -(void) fadeIn{
     [self setAlpha:0.0f];
     self.busyAnimating = YES;
@@ -124,27 +120,32 @@
 
 -(void) doDownloadOfColour {
     NSURL *url=[NSURL URLWithString:@"http://www.colourlovers.com/api/colors/random?format=json"];
-    NSData *data=[NSData dataWithContentsOfURL:url];
-    NSError *error=nil;
-    NSArray *response=[NSJSONSerialization JSONObjectWithData:data options:
-                       NSJSONReadingMutableContainers error:&error];
-
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if(response.count>0) {
-            //seems to have gone ok
-            NSDictionary *colourDictionary = [response objectAtIndex:0];
-            NSString *colourName = [colourDictionary objectForKey:@"title"];
-            NSDictionary *rgbDictionary = [colourDictionary objectForKey:@"rgb"];
-            NSNumber *blue = [rgbDictionary objectForKey:@"blue"];
-            NSNumber *green = [rgbDictionary objectForKey:@"green"];
-            NSNumber *red = [rgbDictionary objectForKey:@"red"];
-            UIColor *colour = [UIColor colorWithRed:red.floatValue/255.0f green:green.floatValue/255.0f blue:blue.floatValue/255.0f alpha:1.0f];
-            [self setColour:colour withName:colourName];
-        }
-        self.busyDownloading = NO;
-    });
+   [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+       if(!connectionError){
+           NSError *jsonError;
+           NSArray *response=[NSJSONSerialization JSONObjectWithData:data options:
+                              NSJSONReadingMutableContainers error:&jsonError];
+           
+           
+           dispatch_async(dispatch_get_main_queue(), ^{
+               if(response.count>0) {
+                   //seems to have gone ok
+                   NSDictionary *colourDictionary = [response objectAtIndex:0];
+                   NSString *colourName = [colourDictionary objectForKey:@"title"];
+                   NSDictionary *rgbDictionary = [colourDictionary objectForKey:@"rgb"];
+                   NSNumber *blue = [rgbDictionary objectForKey:@"blue"];
+                   NSNumber *green = [rgbDictionary objectForKey:@"green"];
+                   NSNumber *red = [rgbDictionary objectForKey:@"red"];
+                   UIColor *colour = [UIColor colorWithRed:red.floatValue/255.0f green:green.floatValue/255.0f blue:blue.floatValue/255.0f alpha:1.0f];
+                   [self setColour:colour withName:colourName];
+               }
+               self.busyDownloading = NO;
+           });
 
+       }
+    }];
+ 
 
 }
 
@@ -161,6 +162,30 @@
 
 -(void) doubleTapped {
     colourNameLabel.hidden ^= true;
+}
+
+-(void)panRecognized:(UIPanGestureRecognizer*)gesture{
+    switch (gesture.state) {
+        case UIGestureRecognizerStateBegan:
+        {
+            [UIView animateWithDuration:0.2f animations:^{
+                self.transform = CGAffineTransformMakeScale(1.1f, 1.1F);
+            }];
+            break;
+        }
+        case UIGestureRecognizerStateChanged:
+            self.center = [gesture locationInView:self.superview];
+            break;
+        case UIGestureRecognizerStateEnded:
+        {
+            [UIView animateWithDuration:0.2f animations:^{
+                self.transform = CGAffineTransformIdentity;
+            }];
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 @end
